@@ -96,6 +96,12 @@ body{
     left       : 125px;
     top        : 40%;
 }
+
+h1{
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+}
  
 
 
