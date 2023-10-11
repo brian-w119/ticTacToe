@@ -10,14 +10,14 @@ body{
 
 
 .gameContainer{
-    display: grid;
-    width: 50vw;
+    display              : grid;
+    width                : 50vw;
     grid-template-columns: auto auto auto;
-    grid-template-rows: 140px 140px 140px;
-    background-color: grey;
-    position: absolute;
-    left: 25%;
-    top: 30%;
+    grid-template-rows   : 20vh 20vh 20vh;
+    background-color     : grey;
+    position             : absolute;
+    left                 : 25%;
+    top                  : 30%;
 }
 
 
@@ -30,17 +30,11 @@ body{
     width: 120px;
 }
 
-.computer{
+.players{
+    display : flex;
     position: absolute;
-    bottom  : 40px;
-    right   : 450px;
+    bottom  : 10%;
 }
-.human{
-    position: absolute;
-    bottom  : 40px;
-    left    : 450px;
-}
-
 
 .human > #label1{
     color      : white;
@@ -50,7 +44,7 @@ body{
 
 .human > img{
     padding-top: 5px;
-    height     : 120px;
+    height     : 18vh;
     width      : 120px;
     object-fit : contain;
 }
@@ -61,10 +55,9 @@ body{
     text-align : center;
 }
 
-
 .computer > img{
     padding-top: 5px;
-    height     : 120px;
+    height     : 18vh;
     width      : 120px;
     object-fit : contain;
 }
@@ -74,27 +67,46 @@ body{
     width           : 200px;
     height          : 200px;   
     position        : absolute;
-    top             : 45%;
-    bottom          : 55%;
+    top             : 30%;
     border-style    : inset;
-    margin-left     : 10px;
+    margin-left     : 40px;
 }
 
 #start{
     color      : black;
     font-weight: bold;
-    position   : absolute;
-    top        : 40%;
-    margin-left: 40px;
-
 }
 
 #reset{
     color      : black;
     font-weight: bold;
-    position   : absolute;
-    left       : 125px;
-    top        : 40%;
+}
+
+.controls{
+    display        : flex;
+    justify-content: center;
+    gap            : 5px;
+    margin-top     : 50px;
+}
+
+#start:hover{
+    background-color: blue;
+    color           : white;
+}
+
+#reset:hover{
+    background-color: blue;
+    color           : white;
+}
+
+h1{
+    color     : white;
+    text-align: center;
+}
+
+#reset:hover{
+    background-color: blue;
+    color           : white;
 }
 
 h1{
@@ -102,6 +114,8 @@ h1{
     text-align: center;
     margin-top: 40px;
 }
+
+
  
 
 
