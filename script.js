@@ -4,24 +4,62 @@ const game = {
     start  : document.querySelector("#start"),
     reset  : document.querySelector("#reset"),
     display: document.querySelector("#display"),
-    speed               : 50,
-    textPosition        : 0,
-    introduction        : null,
+    grid   : document.querySelectorAll(".box"),
 
+    box1: null,
+    box2: null,
+    box3: null,
+    box4: null,
+    box5: null,
+    box6: null,
+    box7: null,
+    box8: null,
+        
+    // the result for the game is stored in an array in an object
+    userSelection: {
+        row1: [box1, box2, box3],
+        row2: [box4, box5, box6],
+        row3: [box7, box8, box9],
+    },
+   
 
     typingIntro(){
-        this.introduction = ["A game of 5 rounds will be played. Man chooses first."]
-        this.display.innerHTML = this.introduction[0].substring(0, this.textPosition);
-        if(this.textPosition++ != this.introduction[0].length){
+        const speed        = 50;
+        const textPosition = 0;
+        const introduction = ["A game of 5 rounds will be played. Man chooses first."];
+
+        this.display.innerHTML = introduction[0].substring(0, this.textPosition);
+        if(this.textPosition++ != introduction[0].length){
          setTimeout(this.typingIntro, this.speed);
         };
      },
+
+    userChooses(){
+        for(const eachGrid of this.grid){
+           eachGrid.addEventListener("click", event => {
+
+            if(manChooses){
+                eachGrid.innerHTML = "X";
+            }else{
+                eachGrid.innerHTML = "O";
+            };
+
+        });
+      };
+    },
+
+    computerChooses(){
+       for(const emptyBox of this.grid){
+          
+       };
+    },
+
     
     
     init(){
-       window.addEventListener("load", () => {
-          this.typingIntro();
-       });
+       window.addEventListener("load", () => this.typingIntro() );
+       this.userChooses();
+    
     },
 
 
