@@ -6,15 +6,15 @@ const game = {
     display: document.querySelector("#display"),
     grid   : document.querySelectorAll(".box"),
 
-    box1: null,
-    box2: null,
-    box3: null,
-    box4: null,
-    box5: null,
-    box6: null,
-    box7: null,
-    box8: null,
-    box9: null,
+    box1: document.querySelector("#box1"),
+    box2: document.querySelector("#box2"),
+    box3: document.querySelector("#box3"),
+    box4: document.querySelector("#box4"),
+    box5: document.querySelector("#box5"),
+    box6: document.querySelector("#box6"),
+    box7: document.querySelector("#box7"),
+    box8: document.querySelector("#box8"),
+    box9: document.querySelector("#box9"),
 
     resultArr: [], 
         
@@ -64,10 +64,24 @@ const game = {
        console.log(this.resultArr);
     },
 
+    //sets all indices to "null"
+    defaultSettings(){
+       for(let value in this.userSelection){
+           for(let index = 0; index < 3; index++){
+               this.userSelection[value][index] = null;
+           };
+       };
+       console.log(this.userSelection);
+    },
+
     init(){
-       window.addEventListener("load", () => this.typingIntro() );
+       window.addEventListener("load", () => {
+        this.typingIntro();
+        this.defaultSettings();
+       });
        this.userChooses();
-       this.computerChooses();
+       //this.computerChooses();
+       
     },
 
 
