@@ -71,7 +71,6 @@ const game = {
                this.userSelection[value][index] = null;
            };
        };
-       console.log(this.userSelection);
     },
 
     init(){
@@ -80,8 +79,7 @@ const game = {
         this.defaultSettings();
        });
        this.userChooses();
-       //this.computerChooses();
-       
+       this.computerChooses();
     },
 
 
