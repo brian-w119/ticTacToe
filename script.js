@@ -52,8 +52,8 @@ const game = {
 
     gameReset(){
         this.reset.addEventListener("click", event => {
-            this.round           = 0;
-            this.gameInPlay      = false;
+            this.round      = 0;
+            this.gameInPlay = false;
             this.humanToChoose   = false;
             this.machineToChoose = false;
             this.defaultSettings();
@@ -66,12 +66,11 @@ const game = {
         for(const eachGrid of this.grid){
            eachGrid.addEventListener("click", event => {
                if((this.gameInPlay === true) && (this.round < 5) && (this.humanToChoose === true)){
-                 eachGrid.innerHTML             = "X";
-                 eachGrid.style.color           = "blue";
+                 eachGrid.innerHTML   = "X";
+                 eachGrid.style.color = "blue";
                  eachGrid.style.backgroundColor = "blue";
                  setTimeout(this.computerChooses(), 1500);
-                //this.computerChooses();
-            }
+           }
         });
       };
     },
@@ -92,8 +91,9 @@ const game = {
       choice = Math.floor(Math.random() * 9);
       console.log(this.resultArr[choice]);
       this.round += 1;
-      this.resultArr[choice].innerHTML  = "C";
-      this.resultArr[choice].style.color   = "red";
+      console.log(`round: ${this.round}`);
+      this.resultArr[choice].innerHTML   = "C";
+      this.resultArr[choice].style.color = "red";
       this.resultArr[choice].style.backgroundColor = "red";
     },
 
@@ -101,7 +101,7 @@ const game = {
     defaultSettings(){
        for(let value in this.userSelection){
            for(let index = 0; index < 3; index++){
-               this.userSelection[value][index].innerHTML= "";
+               this.userSelection[value][index].innerHTML = "";
                this.userSelection[value][index].style.backgroundColor = "grey";
            };
         };
