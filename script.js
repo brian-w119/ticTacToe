@@ -46,7 +46,18 @@ const game = {
           this.gameInPlay      = true;
           this.humanToChoose   = true;
           this.machineToChoose = false;
-          console.log("game started");
+          console.log(`game started,round: ${this.round}`);
+        });
+    },
+
+    gameReset(){
+        this.reset.addEventListener("click", event => {
+            this.round           = 0;
+            this.gameInPlay      = false;
+            this.humanToChoose   = false;
+            this.machineToChoose = false;
+            this.defaultSettings();
+            console.log("game is reset");
         });
     },
 
@@ -57,6 +68,8 @@ const game = {
                  eachGrid.innerHTML             = "X";
                  eachGrid.style.color           = "blue";
                  eachGrid.style.backgroundColor = "blue";
+                 setTimeout(this.computerChooses(), 1500);
+                //this.computerChooses();
             }
         });
       };
@@ -76,8 +89,9 @@ const game = {
       items  = this.resultArr.length;
       choice = Math.floor(Math.random() * 9);
       console.log(this.resultArr[choice]);
-      this.resultArr[choice].innerHTML = "C";
-      this.resultArr[choice].style.color = "red";
+      round += 1;
+      this.resultArr[choice].innerHTML  = "C";
+      this.resultArr[choice].style.color   = "red";
       this.resultArr[choice].style.backgroundColor = "red";
 
       console.log(choice);
@@ -88,18 +102,20 @@ const game = {
        for(let value in this.userSelection){
            for(let index = 0; index < 3; index++){
                this.userSelection[value][index].innerHTML= "";
+               this.userSelection[value][index].style.backgroundColor = "grey";
            };
-       };
+        };
     },
+
 
     init(){
        window.addEventListener("load", () => {
-        this.typingIntro();
-        this.defaultSettings();
+          this.typingIntro();
+          this.defaultSettings();
        });
        this.gameStart();
+       this.gameReset();
        this.userChooses();
-       this.computerChooses();
     },
 
 
