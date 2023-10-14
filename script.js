@@ -62,6 +62,7 @@ const game = {
     },
 
     userChooses(){
+        this.resultArr = [];
         for(const eachGrid of this.grid){
            eachGrid.addEventListener("click", event => {
                if((this.gameInPlay === true) && (this.round < 5) && (this.humanToChoose === true)){
@@ -86,15 +87,14 @@ const game = {
              };
          };
       };
+      console.log(this.resultArr);
       items  = this.resultArr.length;
       choice = Math.floor(Math.random() * 9);
       console.log(this.resultArr[choice]);
-      round += 1;
+      this.round += 1;
       this.resultArr[choice].innerHTML  = "C";
       this.resultArr[choice].style.color   = "red";
       this.resultArr[choice].style.backgroundColor = "red";
-
-      console.log(choice);
     },
 
     //sets all indices to "null"
@@ -107,18 +107,15 @@ const game = {
         };
     },
 
-
     init(){
-       window.addEventListener("load", () => {
+        window.addEventListener("load", () => {
           this.typingIntro();
           this.defaultSettings();
-       });
+        });
        this.gameStart();
        this.gameReset();
        this.userChooses();
     },
-
-
-};//end
+};
 
 game.init();
