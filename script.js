@@ -16,7 +16,11 @@ const game = {
     box8: document.querySelector("#box8"),
     box9: document.querySelector("#box9"),
 
-    resultArr: [], 
+    resultArr      : [], 
+    gameInPlay     : false,
+    humanToChoose  : false,
+    machineToChoose: false,
+    round          : 0,
         
     // the result for the game is stored in an array in an object
     userSelection: {
@@ -37,38 +41,53 @@ const game = {
         };
      },
 
+    gameStart(){
+        this.start.addEventListener("click", event => {
+          this.gameInPlay      = true;
+          this.humanToChoose   = true;
+          this.machineToChoose = false;
+          console.log("game started");
+        });
+    },
+
     userChooses(){
         for(const eachGrid of this.grid){
            eachGrid.addEventListener("click", event => {
-
-           /* if(manChooses){
-                eachGrid.innerHTML = "X";
-            }else{
-                eachGrid.innerHTML = "O";
-            };
-            */
-
+               if((this.gameInPlay === true) && (this.round < 5) && (this.humanToChoose === true)){
+                 eachGrid.innerHTML             = "X";
+                 eachGrid.style.color           = "blue";
+                 eachGrid.style.backgroundColor = "blue";
+            }
         });
       };
     },
 
     computerChooses(){
+       let items;
+       let choice;
        this.resultArr = [];
        for(let row in this.userSelection){
           for(let index = 0; index < 3; index++){
-             if(this.userSelection[row][index] === null){
+             if(this.userSelection[row][index].innerHTML === ""){
                  this.resultArr.push(this.userSelection[row][index]);
              };
-          };
-       };
-       console.log(this.resultArr);
+         };
+      };
+      items  = this.resultArr.length;
+      choice = Math.floor(Math.random() * 9);
+      console.log(this.resultArr[choice]);
+      this.resultArr[choice].innerHTML = "C";
+      this.resultArr[choice].style.color = "red";
+      this.resultArr[choice].style.backgroundColor = "red";
+
+      console.log(choice);
     },
 
     //sets all indices to "null"
     defaultSettings(){
        for(let value in this.userSelection){
            for(let index = 0; index < 3; index++){
-               this.userSelection[value][index] = null;
+               this.userSelection[value][index].innerHTML= "";
            };
        };
     },
@@ -78,6 +97,7 @@ const game = {
         this.typingIntro();
         this.defaultSettings();
        });
+       this.gameStart();
        this.userChooses();
        this.computerChooses();
     },
