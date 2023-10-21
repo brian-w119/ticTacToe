@@ -29,7 +29,6 @@ const game = {
         row3: [this.box7, this.box8, this.box9],
     },
    
-
     typingIntro(){
         const speed        = 50;
         const textPosition = 0;
@@ -39,11 +38,11 @@ const game = {
         if(this.textPosition++ != introduction[0].length){
          setTimeout(this.typingIntro, this.speed);
         };
-     },
+    },
 
     gameStart(){
         this.start.addEventListener("click", event => {
-          this.gameInPlay      = true;
+          this.gameInPlay  = true;
           this.humanToChoose   = true;
           this.machineToChoose = false;
           console.log(`game started,round: ${this.round}`);
