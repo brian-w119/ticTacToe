@@ -51,7 +51,7 @@ const game = {
           this.gameInPlay  = true;
           this.humanToChoose   = true;
           this.machineToChoose = false;
-          console.log(`game started,play: ${this.play}`);
+          console.log("game started");
         });
     },
 
@@ -70,15 +70,19 @@ const game = {
         this.resultArr = [];
         for(const eachGrid of this.grid){
            eachGrid.addEventListener("click", event => {
-               if((this.gameInPlay === true) && (this.play < 5) && (this.humanToChoose === true)){
+               if((this.gameInPlay === true) && (this.play < 9) && (this.humanToChoose === true)){
                  eachGrid.innerHTML   = "M";
                  eachGrid.style.color = "blue";
                  eachGrid.style.backgroundColor = "blue";
                  this.play += 1;
+                 console.log(`man played, play: ${this.play}`);
                  if(this.play === 1){
-                    setTimeout(this.firstPlay(), 1500);
+                    setTimeout(this.firstPlay(), 3900);
                  };
-                 setTimeout(this.secondPlay(), 1500);
+                 this.display.innerHTML = "Please choose again";
+                 if(this.play === 3){
+                   setTimeout(this.secondPlay(), 1500);
+                 };
                  };
         });
       };
@@ -86,23 +90,26 @@ const game = {
     
     //computer chooses based on certain user's first move
     firstPlay(){
+      this.play++;
+      this.resultArr = [];
 
         if(this.userSelection.row1[0].innerHTML === "M"){
-          this.resultArr = [this.box2, this.box3, this.box4, this.box7, this.box5, this.box9];
+          this.resultArr = [this.box2, this.box3, this.box4, this.box5, this.box7];
 
         }else if(this.userSelection.row1[2].innerHTML === "M"){
-         this.resultArr  = [this.box1, this.box2, this.box6, this.box9, this.box5, this.box7];
+         this.resultArr  = [this.box1, this.box2, this.box5, this.box6, this.box9];
 
         }else if(this.userSelection.row3[0].innerHTML === "M"){
-         this.resultArr  = [this.box1, this.box4, this.box8, this.box9, this.box5, this.box3];
+         this.resultArr  = [this.box1, this.box4, this.box5, this.box8, this.box9];
 
         }else if(this.userSelection.row3[2].innerHTML === "M"){
-         this.resultArr  = [this.box7, this.box8, this.box3, this.box6, this.box5, this.box1];
+         this.resultArr  = [this.box3, this.box5, this.box6, this.box7, this.box8];
 
         }else if(this.userSelection.row2[1].innerHTML === "M"){
-         this.resultArr  = [this.box1, this.box3, this.box7, this.box9];
+         this.resultArr  = [this.box1, this.box2, this.box3, this.box4, this.box6, this.box7, this.box8, this.box9];
         };
         this.randomChoice();
+        console.log(`machine played, play: ${this.play}`);
     },
 
     box5Chosen(boxA, boxB, boxC){
@@ -123,12 +130,12 @@ const game = {
      this.randomChoice();
    },
 
-   //computers random function
+   //computer's random function
    randomChoice(){
       let randomNum = Math.floor(Math.random() * (this.resultArr.length));
       this.resultArr[randomNum].innerHTML   = "C";
       this.resultArr[randomNum].style.color = "red";
-      this.resultArr[randomNum].backgroundColor = "red";
+      this.resultArr[randomNum].style.backgroundColor = "red";
    },
 
     //computer chooses based on user's second move
