@@ -6,6 +6,8 @@ const game = {
     display: document.querySelector("#display"),
     grid   : document.querySelectorAll(".box"),
 
+    patternMatched: false,
+
     box1: document.querySelector("#box1"),
     box2: document.querySelector("#box2"),
     box3: document.querySelector("#box3"),
@@ -70,7 +72,7 @@ const game = {
         this.resultArr = [];
         for(const eachGrid of this.grid){
            eachGrid.addEventListener("click", event => {
-               if((this.gameInPlay === true) && (this.play < 9) && (this.humanToChoose === true)){
+               if((this.gameInPlay === true) && (this.patternMatched === false) && (this.humanToChoose === true)){
                  eachGrid.innerHTML   = "M";
                  eachGrid.style.color = "blue";
                  eachGrid.style.backgroundColor = "blue";
@@ -119,7 +121,7 @@ const game = {
 
     //computer chooses at random if the user does not choose adjacent boxes after first play
     secondPlayRandom(){
-      this.resultArr  = [];
+    //this.resultArr  = [];
       for(let row in this.userSelection){
          for(let box = 0; box < (row.length); box++ ){
             if(this.userSelection[row][box].innerHTML === ""){
@@ -133,6 +135,9 @@ const game = {
    //computer's random function
    randomChoice(){
       let randomNum = Math.floor(Math.random() * (this.resultArr.length));
+      if(this.resultArr[randomNum].innerHTML === "C"){ //if the machine has already chosen a box that is now an option, call the function again
+         this.randomChoice();
+      }
       this.resultArr[randomNum].innerHTML   = "C";
       this.resultArr[randomNum].style.color = "red";
       this.resultArr[randomNum].style.backgroundColor = "red";
@@ -145,10 +150,10 @@ const game = {
        //if box1 and an adjacent box is chosen
        if(this.userSelection.row1[0].innerHTML === "M"){
          this.resultArr = [this.box3, this.box7];
-
+         
          if(this.userSelection.row1[1].innerHTML === "M"){
             this.resultArr.push(this.box4);
-
+           
          }else if(this.userSelection.row2[0].innerHTML === "M"){
             this.resultArr.push(this.box2);
 
@@ -216,19 +221,19 @@ const game = {
       if(this.userSelection.row2[1].innerHTML === "M"){
          this.resultArr = [];
          if(this.userSelection.row1[1].innerHTML === "M"){
-            this.resultArr = [this.box7, this.box8, this.box9];
+            this.resultArr = [this.box7, this.box8];
 
          }else if(this.userSelection.row3[1].innerHTML === "M"){
-            this.resultArr = [this.box1, this.box2, this.box3];
+            this.resultArr = [this.box1, this.box2];
 
          }else if(this.userSelection.row2[0].innerHTML === "M"){
-            this.resultArr = [this.box3, this.box6, this.box9];
+            this.resultArr = [this.box3, this.box6];
 
          }else if(this.userSelection.row2[2].innerHTML === "M"){
-            this.resultArr = [this.box1, this.box4, this.box7];
+            this.resultArr = [this.box1, this.box4];
          };
-         this.randomChoice();
       };
+      this.randomChoice();
    },
 
     //sets all indices to "null"
