@@ -93,22 +93,25 @@ const game = {
     //computer chooses based on certain user's first move
     firstPlay(){
       this.play++;
-      this.resultArr = [];
+      this.resultArr = [this.box5];
 
         if(this.userSelection.row1[0].innerHTML === "M"){
-          this.resultArr = [this.box2, this.box3, this.box4, this.box5, this.box7];
+          this.resultArr = [this.box2, this.box4];
 
         }else if(this.userSelection.row1[2].innerHTML === "M"){
-         this.resultArr  = [this.box1, this.box2, this.box5, this.box6, this.box9];
+         this.resultArr.push(this.box2,this.box6);
 
         }else if(this.userSelection.row3[0].innerHTML === "M"){
-         this.resultArr  = [this.box1, this.box4, this.box5, this.box8, this.box9];
+         this.resultArr.push(this.box4,this.box7);
 
         }else if(this.userSelection.row3[2].innerHTML === "M"){
-         this.resultArr  = [this.box3, this.box5, this.box6, this.box7, this.box8];
+         this.resultArr.push(this.box6, this.box8);
 
         }else if(this.userSelection.row2[1].innerHTML === "M"){
-         this.resultArr  = [this.box1, this.box2, this.box3, this.box4, this.box6, this.box7, this.box8, this.box9];
+        // this.resultArr  = [this.box1, this.box2, this.box3, this.box4, this.box6, this.box7, this.box8, this.box9];
+        this.resultArr = [...this.userSelection.row1, ...this.userSelection.row2, ...this.userSelection.row3];
+        console.log(this.resultArr);
+
         };
         this.randomChoice();
         console.log(`machine played, play: ${this.play}`);
@@ -123,7 +126,7 @@ const game = {
     secondPlayRandom(){
     //this.resultArr  = [];
       for(let row in this.userSelection){
-         for(let box = 0; box < (row.length); box++ ){
+         for(let box = 0; box < (this.userSelection[row].length); box++ ){
             if(this.userSelection[row][box].innerHTML === ""){
                this.resultArr.push(this.userSelection[row][box]);
             };
@@ -160,9 +163,9 @@ const game = {
          }else if(this.userSelection.row2[1].innerHTML === "M"){
             this.box5Chosen(this.box6, this.box8, this.box9);
 
-         }else{
-            this.secondPlayRandom();
-         };
+         }//else{
+           // this.secondPlayRandom();
+        // };
        };
 
       //if box3 and an adjacent box is chosen
@@ -177,9 +180,9 @@ const game = {
 
          }else if(this.userSelection.row2[1].innerHTML === "M"){
             this.box5Chosen(this.box4, this.box7, this.box8);
-         }else{
-            this.secondPlayRandom();
-         };
+         }//else{
+           // this.secondPlayRandom();
+         //};
       };
 
       //if box7 and an adjacent box is chosen
@@ -194,9 +197,9 @@ const game = {
 
          }else if(this.userSelection.row2[1].innerHTML === "M"){
             this.box5Chosen(this.box2, this.box3, this.box6);
-         }else{
+         }/*else{
             this.secondPlayRandom();
-         };
+         };*/
       };
 
       //if box9 and an adjacent box is chosen
@@ -212,9 +215,9 @@ const game = {
          }else if(this.userSelection.row2[1].innerHTML === "M"){
             this.box5Chosen(this.box1, this.box2, this.box4);
 
-         }else{
+         }/*else{
             this.secondPlayRandom();
-         };
+         };*/
       };
 
        //if middle box and an adjacent box is chosen by user
