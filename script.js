@@ -26,7 +26,6 @@ const game = {
    resultArr      : [], 
    gameInPlay     : false,
    humanToChoose  : false,
-   machineToChoose: false,
    play           : 0,
        
    // the result for the game is stored in an array in an object
@@ -67,41 +66,59 @@ const game = {
        });
    },
 
-   userChooses(){
-       this.resultArr = [];
-       for(const eachGrid of this.grid){
-          eachGrid.addEventListener("click", event => {
-              if((eachGrid.innerHTML === "") && (this.gameInPlay === true) && (this.patternMatched === false) && (this.humanToChoose === true)){
-                eachGrid.innerHTML   = "M";
-                eachGrid.style.color = "blue";
-                eachGrid.style.backgroundColor = "blue";
-                this.play += 1;
-                console.log(`man played, play: ${this.play}`);
-                if(this.play === 1){
-                   setTimeout(this.firstPlay(), 3900);
-                };
-                this.display.innerHTML = "Please choose again";
-                if(this.play === 3){
-                  setTimeout(this.secondPlay(), 1500);
-                };
-                };
-       });
-     };
+   
+
+   gamePlay(){
+      this.userChooses();
+      if(this.play === 1){
+         this.firstPlay();
+      }
    },
+
+   userChooses(){
+      this.resultArr = [];
+      for(const eachGrid of this.grid){
+         eachGrid.addEventListener("click", event => {
+             if((this.gameInPlay === true) && (this.patternMatched === false) && (this.humanToChoose === true)){
+               eachGrid.innerHTML   = "X";
+               eachGrid.style.color = "blue";
+               eachGrid.style.backgroundColor = "blue";
+               this.play++;
+               console.log(`man chose, play:${this.play}`);
+               if(this.play === 1){
+                  this.firstPlay();
+               };
+         }
+      });
+    };
+  },
+
+  randomChoice(){
+    let randomNumber = Math.floor(Math.random() * this.resultArr.length);
+    this.resultArr[randomNumber].innerHTML   = "C";
+    this.resultArr[randomNumber].style.color = "red";
+    this.resultArr[randomNumber].style.backgroundColor = "red";
+
+    console.log(`machine chose, play:${this.play}`);
+  },
+
    
    //computer chooses based on certain user's first move
    firstPlay(){
-     this.play++;
+     this.humanToChoose = false;
+     //this.play++;
      this.resultArr = [this.box5];
 
        if(this.userSelection.row1[0].innerHTML === "M"){
-         this.resultArr = [this.box2, this.box4];
+         console.log(this.resultArr);
+         this.resultArr.push(this.box2, this.box4);
+         this.randomChoice();
 
        }else if(this.userSelection.row1[2].innerHTML === "M"){
         this.resultArr.push(this.box2,this.box6);
 
        }else if(this.userSelection.row3[0].innerHTML === "M"){
-        this.resultArr.push(this.box4,this.box7);
+        this.resultArr.push(this.box4,this.box8);
 
        }else if(this.userSelection.row3[2].innerHTML === "M"){
         this.resultArr.push(this.box6, this.box8);
@@ -109,137 +126,15 @@ const game = {
        }else if(this.userSelection.row2[1].innerHTML === "M"){
        // this.resultArr  = [this.box1, this.box2, this.box3, this.box4, this.box6, this.box7, this.box8, this.box9];
        this.resultArr = [...this.userSelection.row1, ...this.userSelection.row2, ...this.userSelection.row3];
-       console.log(this.resultArr);
+       this.resultArr.splice(this.resultArr.indexOf(box5), 1);
 
        };
-       this.randomChoice();
-       console.log(`machine played, play: ${this.play}`);
+       this.humanToChoose = true;
+      
    },
 
-   box5Chosen(boxA, boxB, boxC){
-     this.resultArr  = [];
-     this.resultArr  = [boxA, boxB, boxC];
-   },
-
-   //computer chooses at random if the user does not choose adjacent boxes after first play
-   secondPlayRandom(){
-   //this.resultArr  = [];
-     for(let row in this.userSelection){
-        for(let box = 0; box < (this.userSelection[row].length); box++ ){
-           if(this.userSelection[row][box].innerHTML === ""){
-              this.resultArr.push(this.userSelection[row][box]);
-           };
-        };
-     };
-    this.randomChoice();
-  },
-
-  //computer's random function
-  randomChoice(){
-     let randomNum = Math.floor(Math.random() * (this.resultArr.length));
-     if(this.resultArr[randomNum].innerHTML === "C"){ //if the machine has already chosen a box that is now an option, call the function again
-        this.randomChoice();
-     }
-     this.resultArr[randomNum].innerHTML   = "C";
-     this.resultArr[randomNum].style.color = "red";
-     this.resultArr[randomNum].style.backgroundColor = "red";
-  },
-
-   //computer chooses based on user's second move
-  secondPlay(){
-      this.resultArr = [];
-
-      //if box1 and an adjacent box is chosen
-      if(this.userSelection.row1[0].innerHTML === "M"){
-        this.resultArr = [this.box3, this.box7];
-        
-        if(this.userSelection.row1[1].innerHTML === "M"){
-           this.resultArr.push(this.box4);
-          
-        }else if(this.userSelection.row2[0].innerHTML === "M"){
-           this.resultArr.push(this.box2);
-
-        }else if(this.userSelection.row2[1].innerHTML === "M"){
-           this.box5Chosen(this.box6, this.box8, this.box9);
-
-        }//else{
-          // this.secondPlayRandom();
-       // };
-      };
-
-     //if box3 and an adjacent box is chosen
-     if(this.userSelection.row1[2].innerHTML === "M"){
-        options = [this.box1, this.box9];
-
-        if(this.userSelection.row1[1].innerHTML === "M"){
-           options.push(this.box6);
-
-        }else if(this.userSelection.row2[2].innerHTML === "M"){
-           options.push(this.box2);
-
-        }else if(this.userSelection.row2[1].innerHTML === "M"){
-           this.box5Chosen(this.box4, this.box7, this.box8);
-        }//else{
-          // this.secondPlayRandom();
-        //};
-     };
-
-     //if box7 and an adjacent box is chosen
-     if(this.userSelection.row3[0].innerHTML === "M"){
-        options = [this.box1, this.box9];
-
-        if(this.userSelection.row2[0].innerHTML === "M"){
-           options.push(this.box8);
-
-        }else if(this.userSelection.row3[1].innerHTML === "M"){
-           options = [this.box4];
-
-        }else if(this.userSelection.row2[1].innerHTML === "M"){
-           this.box5Chosen(this.box2, this.box3, this.box6);
-        }/*else{
-           this.secondPlayRandom();
-        };*/
-     };
-
-     //if box9 and an adjacent box is chosen
-     if(this.userSelection.row3[2].innerHTML === "M"){
-        options = [this.box3, this.box7];
-
-        if(this.userSelection.row2[2].innerHTML === "M"){
-           options.push(this.box8);
-
-        }else if(this.userSelection.row3[1].innerHTML === "M"){
-           options = [this.box6];
-
-        }else if(this.userSelection.row2[1].innerHTML === "M"){
-           this.box5Chosen(this.box1, this.box2, this.box4);
-
-        }/*else{
-           this.secondPlayRandom();
-        };*/
-     };
-
-      //if middle box and an adjacent box is chosen by user
-     if(this.userSelection.row2[1].innerHTML === "M"){
-        this.resultArr = [];
-        if(this.userSelection.row1[1].innerHTML === "M"){
-           this.resultArr = [this.box7, this.box8];
-
-        }else if(this.userSelection.row3[1].innerHTML === "M"){
-           this.resultArr = [this.box1, this.box2];
-
-        }else if(this.userSelection.row2[0].innerHTML === "M"){
-           this.resultArr = [this.box3, this.box6];
-
-        }else if(this.userSelection.row2[2].innerHTML === "M"){
-           this.resultArr = [this.box1, this.box4];
-        };
-     };
-     this.randomChoice();
-  },
-
-   //sets all indices to "null"
-  defaultSettings(){
+  //sets all indices to "" 
+   defaultSettings(){                                                                                        
      for(let value in this.userSelection){
         for(let index = 0; index < 3; index++){
            this.userSelection[value][index].innerHTML = "";
@@ -256,6 +151,7 @@ const game = {
      this.gameStart();
      this.gameReset();
      this.userChooses();
+     //this.gamePlay();
    },
 };
 
