@@ -68,12 +68,13 @@ const game = {
 
    
 
-   gamePlay(){
+  /* gamePlay(){
       this.userChooses();
       if(this.play === 1){
          this.firstPlay();
       }
    },
+   */
 
    userChooses(){
       this.resultArr = [];
@@ -88,7 +89,7 @@ const game = {
                if(this.play === 1){
                   this.firstPlay();
                };
-         }
+         };  
       });
     };
   },
