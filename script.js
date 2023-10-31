@@ -81,7 +81,7 @@ const game = {
                    setTimeout(this.firstPlay(), 3900);
                 };
                 this.display.innerHTML = "Please choose again";
-                if(this.play === 3){
+                if(this.play%2 != 0){
                   setTimeout(this.secondPlay(), 1500);
                 };
                 };
@@ -145,6 +145,7 @@ const game = {
      this.resultArr[randomNum].style.backgroundColor = "red";
   },
 
+  /*
    //computer chooses based on user's second move
   secondPlay(){
       this.resultArr = [];
@@ -162,9 +163,8 @@ const game = {
         }else if(this.userSelection.row2[1].innerHTML === "M"){
            this.box5Chosen(this.box6, this.box8, this.box9);
 
-        }//else{
-          // this.secondPlayRandom();
-       // };
+        }else if(this.userSelection.row2[1].innerHTML = "M"){
+           this.randomChoice();
       };
 
      //if box3 and an adjacent box is chosen
@@ -214,7 +214,7 @@ const game = {
         }else if(this.userSelection.row2[1].innerHTML === "M"){
            this.box5Chosen(this.box1, this.box2, this.box4);
 
-        }/*else{
+        };/*else{
            this.secondPlayRandom();
         };*/
      };
@@ -236,8 +236,9 @@ const game = {
         };
      };
      this.randomChoice();
-  },
-
+ },
+  */
+/*
    //sets all indices to "null"
   defaultSettings(){
      for(let value in this.userSelection){
@@ -247,6 +248,7 @@ const game = {
         };
      };
   },
+  */
 
   init(){
      window.addEventListener("load", () => {
