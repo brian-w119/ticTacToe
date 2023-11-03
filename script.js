@@ -135,16 +135,25 @@ const game = {
    
    
    //machines random choooses from a predefined list"
-   randomChoice(){
+   randomChoice() {
       this.play++;
-      let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
-      if(this.resultArr[randomNumber].innerHTML !== ""){
-         this.randomChoice();
-      };
-       this.resultArr[randomNumber].innerHTML = "C";
-       this.resultArr[randomNumber].style.color = "red";
-       this.resultArr[randomNumber].style.backgroundColor = "red";
-       
+
+      // repeat forever
+      while (true) {
+         let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
+
+         // if the box we found is empty
+         if (this.resultArr[randomNumber].innerHTML === "") {
+
+            // place the letter
+            this.resultArr[randomNumber].innerHTML = "C";
+            this.resultArr[randomNumber].style.color = "red";
+            this.resultArr[randomNumber].style.backgroundColor = "red";
+            
+            // stop repeating the loop
+            break;
+         }
+      }
    },
 
 
