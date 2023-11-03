@@ -24,6 +24,9 @@ body{
 .gameContainer > div {
     border: 2px solid white; 
 }
+.gameContainer > div:hover{
+    transform: scale(1.01);
+}
 
 
 .human, .computer{
