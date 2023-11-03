@@ -114,19 +114,23 @@ const game = {
        }else if(this.userSelection.row3[0].innerHTML === "M"){
               this.resultArr.push(this.box4,this.box8);
               this.randomChoice();
+
       }else if(this.userSelection.row3[2].innerHTML === "M"){
               this.resultArr.push(this.box6, this.box8);
               this.randomChoice();
+
       }else if(this.userSelection.row3[1].innerHTML === "M"){
                this.resultArr.push(this.box8, this.box4);
                this.randomChoice();
+
       }else if(this.userSelection.row2[1].innerHTML === "M"){
                this.resultArr.push(this.box1, this.box2, this.box3, this.box4, this.box6, this.box7, this.box8, this.box9);
                this.resultArr.shift();
                this.randomChoice();
       }else{
-         this.randomChoice();
-      }
+        this.randomChoice();
+      };
+
        console.log(this.resultArr);
        
        console.log(`machine played: ${this.play}`);
@@ -135,26 +139,48 @@ const game = {
    
    
    //machines random choooses from a predefined list"
-   randomChoice() {
+   randomChoice(){
       this.play++;
-
-      // repeat forever
-      while (true) {
-         let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
-
-         // if the box we found is empty
-         if (this.resultArr[randomNumber].innerHTML === "") {
-
-            // place the letter
-            this.resultArr[randomNumber].innerHTML = "C";
-            this.resultArr[randomNumber].style.color = "red";
-            this.resultArr[randomNumber].style.backgroundColor = "red";
-            
-            // stop repeating the loop
-            break;
-         }
-      }
+        if(this.play < 5){
+            this.selectBox();
+        }else{
+            if(this.play < 10){
+                this.loopThrough();
+            };
+        };
    },
+
+   loopThrough(){
+        this.resultArr = [];
+        for(let eachRow in this.userSelection){
+            for(let eachGrid of this.userSelection[eachRow]){
+                if(eachGrid.innerHTML === ""){
+                    this.resultArr.push(eachGrid);
+                };
+            };
+        };
+      console.log(this.resultArr);
+      this.selectBox2();
+   },
+
+   //machine selects if play < 5
+   selectBox(){
+        let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
+
+        if(this.resultArr[randomNumber].innerHTML === ""){
+             this.resultArr[randomNumber].innerHTML = "C";
+             this.resultArr[randomNumber].style.color = "red";
+             this.resultArr[randomNumber].style.backgroundColor = "red";
+        };
+    },
+   
+    //machine selects if play is greater than 5
+   selectBox2(){
+      let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
+      this.resultArr[randomNumber].innerHTML = "C";
+      this.resultArr[randomNumber].style.color = "red";
+      this.resultArr[randomNumber].style.backgroundColor = "red";  
+    },
 
 
    //sets all indices to "null"
@@ -175,6 +201,7 @@ const game = {
       this.gameStart();
       this.gameReset();
       this.userChooses();
+     // this.loopThrough();
    },
 };
 
