@@ -19,9 +19,10 @@ const game = {
    gameInPlay     : false,
    humanToChoose  : false,
    machineToChoose: false,
-   play         : 0,
+   play           : 0,
+   randomNumber   : null,
 
-   patterMatched: false,
+   patternMatched: false,
        
    // the result for the game is stored in an array in an object
    userSelection: {
@@ -83,19 +84,35 @@ const game = {
                  this.play++;
                };
                console.log(`man played: ${this.play}`);
-               this.machinePlay();
+               if(this.play <= 8){
+                 setTimeout(this.machinePlay(), 2000);
+               };
                //console.log(`man played: ${this.play}`);
            });
        }; 
    },
 
-   matched(){
-      if(this.box1 === this.box2 === this.box3){
-         this.patterMatched = true;
-      }else if(this.box4 === this.box5 === this.box6){
-         this.patterMatched = true;
-      }else if(this.box7, this.box8, this.box9){
-         this.patterMatched = true;
+   patternSearch(){
+
+      let pattern = {
+         pattern1: [this.box1, this.box2, this.box3],
+         pattern2: [this.box4, this.box5, this.box6],
+         pattern3: [this.box7, this.box8, this.box9],
+         pattern4: [this.box1, this.box4, this.box7],
+         pattern5: [this.box3, this.box6, this.box9],
+         pattern6: [this.box1, this.box5, this.box9],
+         pattern7: [this.box3, this.box5, this.box7],
+      };
+      
+      for(let array in pattern){
+           for(index of pattern[array]){
+              if((index.innerHTML ===  pattern[array][0].innerHTML) && this.play >= 5){
+                 this.patternMatched = true;
+                 console.log("match found");
+              }else{
+                console.log("n0 match found");
+              };
+           };
       };
    },
 
@@ -131,9 +148,9 @@ const game = {
         this.randomChoice();
       };
 
-       console.log(this.resultArr);
+       console.log("options computer can choose from:", this.resultArr);
        
-       console.log(`machine played: ${this.play}`);
+       console.log(`machine played: play${this.play}`);
    },
 
    
@@ -163,15 +180,20 @@ const game = {
       this.selectBox2();
    },
 
+   generateRandomNumber(){
+        randomNumber = Math.floor(Math.random() * (this.resultArr.length)); 
+   },
+
    //machine selects if play < 5
    selectBox(){
-        let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
-
+        this.generateRandomNumber();
+        this.resultArr[randomNumber].innerHTML !== ""? this.generateRandomNumber(): "" ;
         if(this.resultArr[randomNumber].innerHTML === ""){
              this.resultArr[randomNumber].innerHTML = "C";
              this.resultArr[randomNumber].style.color = "red";
              this.resultArr[randomNumber].style.backgroundColor = "red";
         };
+        console.log("machine chose:",  this.resultArr[randomNumber]);
     },
    
     //machine selects if play is greater than 5
@@ -179,7 +201,8 @@ const game = {
       let randomNumber = Math.floor(Math.random() * (this.resultArr.length));
       this.resultArr[randomNumber].innerHTML = "C";
       this.resultArr[randomNumber].style.color = "red";
-      this.resultArr[randomNumber].style.backgroundColor = "red";  
+      this.resultArr[randomNumber].style.backgroundColor = "red"; 
+      console.log("machine chose:",  this.resultArr[randomNumber]); 
     },
 
 
@@ -201,7 +224,7 @@ const game = {
       this.gameStart();
       this.gameReset();
       this.userChooses();
-     // this.loopThrough();
+      this.patternSearch();
    },
 };
 
