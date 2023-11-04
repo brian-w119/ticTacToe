@@ -87,6 +87,9 @@ const game = {
                if(this.play <= 8){
                  setTimeout(this.machinePlay(), 2000);
                };
+               if(this.play >= 5){
+                  this.patternSearch();
+               }
                //console.log(`man played: ${this.play}`);
            });
        }; 
